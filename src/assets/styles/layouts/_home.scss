@@ -14,8 +14,13 @@
 //   color: $uoc-corporate;
 // }
 
+.contact-container div {
+  flex-grow: 1; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-//header
 
 .navbar-brand {
   margin-bottom: 0px;
@@ -252,3 +257,7 @@ img {
 
 }
 
+form {
+  display: block;
+  margin-inline: auto;
+}
