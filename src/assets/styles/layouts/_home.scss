@@ -37,30 +37,30 @@
 
 
 .footer {
-
   padding-top: 30px;
   font-size: 12px;
   text-align: justify;
-  width: 70%;
+  width: 80%;
   margin-inline: auto;
+  @media screen and (max-width: 1000px) {
+    width: 90%;
+  }
+}
+
+.col-md-3 {
+  @media screen and (max-width: 768px) {
+    flex: 0 0 calc(50% - 20px); 
+    margin-inline: auto;
+  }
+  @media screen and (max-width: 480px) {
+    flex: 0 0 calc(100% - 20px); 
+
+  }
 }
 
 .footer .col-12 {
   text-align: center;
 }
-
-
-// Basic styles and layout
-// main {
-//   max-width: 45em;
-//   margin: 0 auto;
-//   position: relative;
-//   padding: 1em;
-// }
-
-// _:-ms-input-placeholder, :root main {
-//   display: block;
-// }
 
 h1 {
   color: red;
@@ -89,12 +89,12 @@ img {
   object-fit: cover;
 }
 
-.news-content img {
+.news-content :is(img) {
   width: 100%;
   position: relative;
 }
 
-.news-content h2 {
+.news-content :is(h2) {
   position: absolute; 
   top: 0; 
   left: 5%; 
@@ -112,29 +112,31 @@ img {
   }
 }
 
-.news-content section p {
-  background-color: rgb(255, 243, 243);
-  text-align: justify;
-  padding: 40px 15% 40px 50px;
-  width: 50%;
-  position: absolute;
-  margin-top: -13%;
-  right: 0px;
-  line-height: 30px;
+:where(.news-content) section {
+  p {
+    background-color: rgb(255, 243, 243);
+    text-align: justify;
+    padding: 40px 15% 40px 50px;
+    width: 50%;
+    position: absolute;
+    margin-top: -13%;
+    right: 0px;
+    line-height: 30px;
 
-  @media screen and (max-width: 1500px) {
-    width: 100%;
-    padding: 40px 15%;
-    position: relative;
-    margin-top: 0px;
-  }
+    @media screen and (max-width: 1500px) {
+      width: 100%;
+      padding: 40px 15%;
+      position: relative;
+      margin-top: 0px;
+    }
 
-  @media screen and (max-width: 768px) {
-    padding-inline: 10%;
+    @media screen and (max-width: 768px) {
+      padding-inline: 10%;
+    }
   }
 }
 
-.news-content article {
+.news-content :is(article) {
   width: 70%;
   margin-inline:auto;
   margin-top: 6%;
@@ -148,35 +150,43 @@ img {
   }
 }
 
-.news-content .row h3, .news-content .row p {
-  padding-inline: 0px;
+.news-content :is(.row){
+  h3, p {
+    padding-inline: 0px;
+  }  
+
 }
 
-.news-content article div{
+:where(.news-content article div) {
   margin-top: 15px;
+  i {
+    margin-right: 10px;
+  }
+
+  p {
+    font-size: 18px;
+  }
+
+  // div:has(> img){
+  //   padding-inline: 0px;
+  // }
 }
 
-.news-content article div i{
-  margin-right: 10px;
+.news-content article :is(h3){
+  margin-bottom: 50px;
 }
 
-.news-content article div p{
-  font-size: 18px;
+:where(.news-content article) {
+  p {
+    line-height: 30px;
+    text-align: justify;
+  }
+  ul {
+    line-height: 40px;
+    list-style: none;
+  }
 }
 
-.news-content article h3 {
-  margin-bottom: 30px;
-}
-
-.news-content article p {
-  line-height: 30px;
-  text-align: justify;
-}
-
-.news-content article ul {
-  line-height: 40px;
-  list-style: none;
-}
 
 .contact-content {
   background-image:url(/src/assets/images/tennis-ball-backgrounds.png);
@@ -206,7 +216,7 @@ img {
   margin-top: 50px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
   padding: 20px; 
 }
@@ -221,12 +231,19 @@ img {
 }
 
 .players li {
-  width: 26%;
+  width: calc(33.33% - 20px);
   margin-bottom: 50px; 
   box-sizing: border-box; 
   padding: 20px;
   background: linear-gradient(0deg, rgba(109,250,186,1) 0%, rgba(176,246,153,1) 45%, rgba(250,242,118,1) 100%);
   border-radius: 10px;
+  @media screen and (max-width: 768px) {
+    width: calc(50% - 20px);
+  }
+
+  @media screen and (max-width: 480px) {
+    width: calc(100% - 20px);
+  }
 }
 
 .players img {
@@ -243,65 +260,141 @@ img {
   margin-top: 10px;
 }
 
-//-------------------------------------------------------------------------------------------------------------
-// Grid layout for wide display
-// @supports (display:grid) {
-//   @media (min-width: 42em) and (min-height: 27em) {
-//     main {
-//       max-width: none;
-//       padding: 0;
-//       display: grid;
-//       grid-template-columns: 1fr 1fr 1fr minmax(2fr, max-content) 1fr;
-//       grid-template-rows: 25vh 25vh 35vh 15vh;
-//     }
 
-//     h1 {
-//       grid-column: 4 / 5;
-//       grid-row: 2 / 3;
-//       z-index: 2;
-//       padding-left: 0.25em;
-//       margin-bottom: initial;
-//     }
+@supports (display:grid) {
+  @media (min-width: 70em) {
+    .front-content{
+      max-width: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr minmax(2fr, max-content) 1fr;
+      grid-template-rows: 25vh 25vh 35vh 15vh;
+    }
 
-//     h2 {
-//       grid-row: 4 / 5;
-//       grid-column: 3 / 5;
+    .front-content h1 {
+      grid-column: 4 / 6;
+      grid-row: 1 / 3;
+      z-index: 2;
+      padding-left: 0.25em;
+      margin-bottom: initial;
+      background-color: #6ff9b8;
+      color: white;
+      font-weight: bold;
+      font-size: 5em;
+      margin-block: auto;
+      padding: 30px;
+    }
 
-//     }
+    .front-content h2 {
+      grid-row: 4 / 5;
+      grid-column: 3 / 5;
+      font-size: 2em;
+      padding-top: 0px;
+      margin-block: auto;
+      color:#ffc107;
+    }
 
-//     hr {
-//       grid-column: 5 / 6;
-//       grid-row: 2;
-//       height: 6px;
+    .first-img{
+      grid-column: 2 / 6;
+      grid-row: 1 / 4;
+    }
+    .second-img{
+      grid-column: 1 / 3;
+      grid-row: 3 / 5;
+      width:500px;
+      height: auto;
+      margin-block: auto;
+    } 
+  }
+  @media (max-width: 70em) {
+    .front-content{
+      max-width: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 25vh 25vh 35vh 15vh;
+    }
 
-//       width: 20ch;
-//     }
+    .front-content h1 {
+      grid-column: 4 / 6;
+      grid-row: 1 / 2;
+      z-index: 2;
+      padding-left: 0.25em;
+      margin-bottom: initial;
+      background-color: #6ff9b8;
+      color: white;
+      font-weight: bold;
+      font-size: 3em;
+      margin-block: auto;
+      padding: 20px;
+    }
 
-//     .about {
-//       grid-column: 5 / 6;
-//       grid-row: 2;
-//       align-self: end;
-//       padding-bottom: 4vh;
-//       margin-bottom: initial;
-//     }
+    .front-content h2 {
+      grid-row: 4 / 6;
+      grid-column: 3 / 5;
+      font-size: 1.3em;
+      padding-top: 0px;
+      margin-top:15px;
+      color:#ffc107;
+    }
 
-//     a {
-//       grid-column: 5 / 6;
-//       justify-self: end;
-//       align-self: center;
-//       margin-bottom: initial;
-//     }
+    .first-img{
+      grid-column: 2 / 5;
+      grid-row: 1 / 4;
+    }
+    .secoewd-img{
+      grid-column: 1 / 3;
+      grid-row: 3 / 5;
+      width:400px;
+      height: auto;
+      margin-block: auto;
+    } 
+  }
+  @media (max-width: 480px) {
+    .front-content h1 {
+      grid-column: 1 / 6;
+      grid-row: 1 / 2;
+    }
 
-//     img {
-//       grid-column: 2 / 5;
-//       grid-row: 1 / 3;
-//     }
+    .front-content h2 {
+      grid-row: 4 / 6;
+      grid-column: 3 / 6;
+      font-size: 1.5em;
+      margin-block:auto;
+    }
 
-//   }
+    .first-img{
+      grid-column: 1 / 6;
+      grid-row: 1 / 4;
+    }
+    .second-img{
+      grid-column: 1 / 3;
+      grid-row: 4 / 6;
+      width:400px;
+      height: auto;
+      margin-block: auto;
+    } 
+  }
+}
 
-//   @media (min-width: 48em) and (min-height: 27em) {
-//     hr {
-//       opacity: 1;
-//     }
-//   }
-// }
+@supports not (display: grid) {
+  main {
+    // Estilos para navegadores que no admiten grid
+    // Puedes proporcionar estilos alternativos aquí
+  }
+
+  .front-content h1 {
+    // Estilos alternativos para h1
+  }
+
+  .front-content h2 {
+    // Estilos alternativos para h2
+  }
+
+  .first-img,
+  .second-img {
+    // Estilos alternativos para imágenes
+    width: 100%; // Ejemplo: Ajustar el ancho al 100%
+    height: auto; // Mantener la proporción de aspecto
+  }
+}
